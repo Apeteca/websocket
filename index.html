@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
+
+        socket.onopen = function(e) {
+        alert("[open] Conexión establecida");
+        alert("Enviando al servidor");
+        socket.send("Mi nombre es Ricardo");
+        };
+
+        socket.onmessage = function(event) {
+        alert(`[message] Datos recibidos del servidor: ${event.data}`);
+        };
+
+        socket.onclose = function(event) {
+        if (event.wasClean) {
+            alert(`[close] Conexión cerrada limpiamente, código=${event.code} motivo=${event.reason}`);
+        } else {
+            // ej. El proceso del servidor se detuvo o la red está caída
+            // event.code es usualmente 1006 en este caso
+            alert('[close] La conexión se cayó');
+        }
+        };
+
+        socket.onerror = function(error) {
+        alert(`[error]`);
+        };
+    </script>
+</body>
+</html>
